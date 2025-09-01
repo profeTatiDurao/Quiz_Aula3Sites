@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz - HTML, CSS e JS</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #1e1e2f;
+      color: #f0f0f0;
+      text-align: center;
+      padding: 20px;
+    }
+    .container {
+      background: #2b2b3d;
+      padding: 30px;
+      width: 450px;
+      margin: auto;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,255,255,0.3);
+    }
+    h1 {
+      margin-bottom: 20px;
+      color: #00ffff;
+    }
+    .pergunta {
+      text-align: left;
+      margin-bottom: 20px;
+      padding: 10px;
+      border-left: 3px solid #00ffff;
+      background-color: #242436;
+      border-radius: 5px;
+    }
+    button {
+      padding: 10px 20px;
+      background-color: #00ffff;
+      color: #1e1e2f;
+      font-weight: bold;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover {
+      background-color: #00b3b3;
+    }
+    #resultado {
+      font-weight: bold;
+      margin-top: 20px;
+      color: #00ffff;
+    }
+    .correto {
+      color: #00ff7f;
+      font-weight: bold;
+    }
+    .errado {
+      color: #ff4040;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Quiz - HTML, CSS e JavaScript</h1>
+    
+    <form id="quizForm">
+     <div class="pergunta" id="q6box">
+      <p>1) Qual estrutura HTML é ideal para criar o tabuleiro do jogo da velha?</p>
+      <label><input type="radio" name="q6" value="a"> Tabela com &lt;table&gt;</label><br>
+      <label><input type="radio" name="q6" value="b"> Divs com layout em grid</label><br>
+      <label><input type="radio" name="q6" value="c"> Lista com &lt;ul&gt; e &lt;li&gt;</label>
+    </div>
+
+    <div class="pergunta" id="q7box">
+      <p>2) Qual propriedade CSS é usada para organizar o tabuleiro em linhas e colunas?</p>
+      <label><input type="radio" name="q7" value="a"> display: flex</label><br>
+      <label><input type="radio" name="q7" value="b"> display: grid</label><br>
+      <label><input type="radio" name="q7" value="c"> display: block</label>
+    </div>
+
+    <div class="pergunta" id="q8box">
+      <p>3) Qual comando JavaScript adiciona uma célula ao tabuleiro?</p>
+      <label><input type="radio" name="q8" value="a"> gameBoard.innerHTML = cell</label><br>
+      <label><input type="radio" name="q8" value="b"> gameBoard.appendChild(cell)</label><br>
+      <label><input type="radio" name="q8" value="c"> gameBoard.createElement(cell)</label>
+    </div>
+
+    <div class="pergunta" id="q9box">
+      <p>4) Qual função verifica se um jogador venceu o jogo?</p>
+      <label><input type="radio" name="q9" value="a"> checkVictory()</label><br>
+      <label><input type="radio" name="q9" value="b"> verifyWinner()</label><br>
+      <label><input type="radio" name="q9" value="c"> checkWin()</label>
+    </div>
+
+    <div class="pergunta" id="q10box">
+      <p>5) Qual comando é usado para escutar o clique em uma célula?</p>
+      <label><input type="radio" name="q10" value="a"> cell.addEventListener('click', handleClick)</label><br>
+      <label><input type="radio" name="q10" value="b"> cell.onclick(handleClick)</label><br>
+      <label><input type="radio" name="q10" value="c"> cell.clickEvent(handleClick)</label>
+    </div>
+
+
+      <button type="button" onclick="corrigir()">Enviar Respostas</button>
+    </form>
+
+    <p id="resultado"></p>
+  </div>
+
+  <script>
+    function corrigir() {
+      let respostasCorretas = {
+        q6: "b", // Divs com grid
+        q7: "b", // display: grid
+        q8: "b", // appendChild
+        q9: "c", // checkWin
+        q10: "a" // addEventListener
+      };
+
+
+      let pontos = 0;
+      let total = 5;
+      let form = document.getElementById("quizForm");
+
+      for (let q in respostasCorretas) {
+        let resposta = form[q].value;
+        let box = document.getElementById(q + "box");
+
+        let antigo = box.querySelector(".feedback");
+        if (antigo) antigo.remove();
+
+        let feedback = document.createElement("p");
+        feedback.classList.add("feedback");
+
+        if (resposta === respostasCorretas[q]) {
+          pontos++;
+          feedback.textContent = "✅ Correto!";
+          feedback.classList.add("correto");
+        } else {
+          feedback.textContent = "❌ Errado. Resposta certa: " + respostasCorretas[q].toUpperCase();
+          feedback.classList.add("errado");
+        }
+
+        box.appendChild(feedback);
+      }
+
+      document.getElementById("resultado").textContent = 
+        `Você acertou ${pontos} de ${total} questões.`;
+    }
+  </script>
+</body>
+</html>
